@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://unpkg.com/peerjs@1.3.1/dist/peerjs.min.js" defer></script>
+    <script>
+        const ROOM_ID = "<%= roomId %>"
+        Array.prototype.remove = function(elem) {
+            var indexElement = this.findIndex(el => el === elem);
+            if (indexElement != -1)
+            this.splice(indexElement, 1);
+            return this;
+        };
+        function countProps(obj) {
+            var count = 0;
+            for (var p in obj) {
+            obj.hasOwnProperty(p) && count++;
+            }
+            return count; 
+        }
+    </script>
+    <script src="/socket.io/socket.io.js" defer></script>
+    <script src="script.js" defer></script>
+    <title>Ilcscord Room</title>
+    <style>
+        body {
+            margin:0;
+            background-color: rgb(24,24,24);
+        }
+        #video-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, 250px);
+            grid-auto-rows: auto;
+        }
+
+        video {
+            width:100%;
+            height:100%;
+            object-fit: cover;
+        }
+
+        .blocker {
+            position: fixed;
+            height:100%;
+            width: 100%;
+            background-color:white;
+            z-index: 100;
+            display: table;
+            text-align: center;
+        }
+
+        .dots-cont {
+            }
+            .dot {
+            width: 12px;
+            height: 12px;
+            background: #145252;
+            display: inline-block;
+            border-radius: 50%;
+            right: 0px;
+            bottom: 0px;
+            margin: 0px 2.5px;
+            position: relative;
+            animation: jump 1s infinite;
+            }
+            .dots-cont:hover > .dot {
+            /* position: relative; */
+            /* bottom: 0px; */
+            animation: none;
+            }
+            .dots-cont .dot-1 {
+            -webkit-animation-delay: 75ms;
+            animation-delay: 75ms;
+            }
+            .dots-cont .dot-2 {
+            -webkit-animation-delay: 175ms;
+            animation-delay: 175ms;
+            }
+            .dots-cont .dot-3 {
+            -webkit-animation-delay: 250ms;
+            animation-delay: 250ms;
+            }
+            @keyframes jump {
+            0%   {bottom: 0px;}
+            20%  {bottom: 10px;}
+            40%  {bottom: 0px;}
+            }
+            #selfDisplay {
+                position:fixed;
+                right:10px;
+                top:10px;
+                width:250px;
+                height:175px;
+                border-radius: 15px;
+            }
+    </style>
+</head>
+<body>
+    <!--<div class = "blocker">
+        <h1 style="display: table-cell;vertical-align: middle;user-select:none;">Waiting to be accepted into room<p>The room has enabled secure entering. Learn more <a href="/help/secureenter.php">here</a></p></h1>
+    </div>-->
+    <div class = "blocker waitingBlocker">
+        <h1 style="display: table-cell;vertical-align: middle;user-select:none;">Waiting for people to enter<p></p><span class="dots-cont"> <span class="dot dot-1"></span> <span class="dot dot-2"></span> <span class="dot dot-3"></span> </span></h1>
+        <audio id="audio" controls="" style="width: 100%;" autoplay><source src="https://drive.google.com/u/0/uc?id=1yycM2JvPz8RWju_WTnmYmXkNXSzsT7LL&amp;export=download" type="audio/mpeg">Please update your browser does not support the audio element.</audio>
+    </div>
+    <div id="video-grid"></div>
+    <video id="selfDisplay"></video>
+    <script>
+        function userConnected(){
+            /*document.body.click();
+            var msg = new SpeechSynthesisUtterance();
+            msg.voice = window.speechSynthesis.getVoices()[3];
+            msg.text = "User has connected";
+            window.speechSynthesis.speak(msg);*/
+        }
+    </script>
+</body>
+</html>
